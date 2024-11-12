@@ -1,0 +1,17 @@
+app:
+  name: 'jobsearcher_user'
+  version: '1.0.0'
+
+
+logger:
+  log_level: 'debug'
+  rollbar_env: 'jobsearcher_user'
+
+bleve:
+  file_path: './bleve/keyword_index.bleve'
+  index_id: 'document'
+postgres:
+  pool_max: 10
+
+kafka:
+  max_bytes: 10e6
