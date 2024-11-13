@@ -7,14 +7,12 @@ import (
 
 type Repository struct {
 	TxManager client.Manager
-	Keyword   ipsql.Keyword
-	Vacancy   ipsql.Vacancy
+	Link      ipsql.Link
 }
 
 func New(pg client.Client) Repository {
 	return Repository{
 		TxManager: NewPgxTxManager(pg),
-		Keyword:   NewKeyword(pg),
-		Vacancy:   NewVacancy(pg),
+		Link:      NewLink(pg),
 	}
 }

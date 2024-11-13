@@ -1,6 +1,7 @@
 package http
 
 import (
+	"github.com/go-playground/validator"
 	srvc "jobsearcher_user/internal/app/service"
 
 	"github.com/gofiber/fiber/v2"
@@ -8,11 +9,12 @@ import (
 
 type Services struct {
 	Auth srvc.Auth
+	Link srvc.Link
 }
 
 func New(app *fiber.App, services Services) {
-	prefix := "/api/v1/auth"
+	prefix := "/api/v1"
 	router := app.Group(prefix)
-
-	newAuthRoute(router, services.Auth)
+	validate := validator.New()
+	newAuthRoute(router, services.Auth, services.Link, validate)
 }

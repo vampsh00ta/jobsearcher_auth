@@ -42,10 +42,10 @@ func Run(cfg *config.Config) {
 	// Services
 	logger.Info("starting services...")
 	srvc := service.New(psqlRep, cfg)
-	_ = srvc
 	app := newHTTP(cfg, logger)
 	http.New(app, http.Services{
 		Auth: srvc.Auth,
+		Link: srvc.Link,
 	})
 	//u := entity.User{
 	//	ID:        564764193,

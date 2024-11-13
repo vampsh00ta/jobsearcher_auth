@@ -2,79 +2,61 @@ package postgresrep
 
 import (
 	"context"
-	"fmt"
-	"github.com/jackc/pgx/v5"
 	ipsql "jobsearcher_user/internal/app/repository/psql"
 	"jobsearcher_user/pkg/client"
 )
 
-type vacancy struct {
+type link struct {
 	db client.DBManager
 }
 
-func NewVacancy(c client.Client) ipsql.Vacancy {
-	return &vacancy{
+func NewLink(c client.Client) ipsql.Link {
+	return &link{
 		db: newPgxManager(c),
 	}
 }
 
-func (j vacancy) getVacancyIDBySlugID(ctx context.Context, jobSlug string) (int, error) {
+func (l link) Create(ctx context.Context, hash, accessToken string) error {
 	var err error
-	client, err := j.db.DefaultTrOrDB(ctx)
+	client, err := l.db.DefaultTrOrDB(ctx)
 	if err != nil {
-		return -1, err
+		return err
 	}
 
-	q := `select id from vacancy where slug_id = $1`
+	q := `insert into link(hash,access_token) values ($1,$2) on conflict (hash) do nothing  `
 
-	var id int
-	if err = client.QueryRow(ctx, q, jobSlug).Scan(&id); err != nil {
-		return -1, err
+	if err = client.QueryRow(ctx, q, hash, accessToken).Scan(); dbError(err) != nil {
+		return err
 	}
-	return id, nil
+	return nil
 }
-func (j vacancy) AddKeywords(ctx context.Context, vacancySlugID string, keywords []string) error {
+
+func (l link) GetAccessToken(ctx context.Context, hash string) (string, error) {
 	var err error
+	client, err := l.db.DefaultTrOrDB(ctx)
+	if err != nil {
+		return "", err
+	}
 
-	client, err := j.db.DefaultTrOrDB(ctx)
-	if err != nil {
-		return err
-	}
-	var q string
-	if len(keywords) == 0 || keywords == nil {
-		return nil
-	}
-	jobID, err := j.getVacancyIDBySlugID(ctx, vacancySlugID)
-	if err != nil {
-		return err
-	}
-	q = `select id from keyword where name  = any($1)`
-	inputVals := make([]any, 0, len(keywords))
+	q := `select access_token from link where hash = $1`
 
-	rows, err := client.Query(ctx, q, keywords)
-	if err != nil {
-		return err
+	var acccessToken string
+	if err = client.QueryRow(ctx, q, hash).Scan(&acccessToken); err != nil {
+		return "", err
 	}
-	keywordIDs, err := pgx.CollectRows(rows, pgx.RowTo[int])
-	if err != nil {
-		return err
-	}
-	if len(keywordIDs) == 0 {
-		return nil
-	}
-	q = `insert into  vacancy_keyword (vacancy_id,keyword_id) values 
-		 
-		 `
-	inputVals = make([]any, 0, 1+len(keywordIDs))
-	inputVals = append(inputVals, jobID)
+	return acccessToken, nil
+}
 
-	for i, slugID := range keywordIDs {
-		q += fmt.Sprintf("($%d,$%d),", 1, i+2)
-		inputVals = append(inputVals, slugID)
+func (l link) Delete(ctx context.Context, hash string) error {
+	var err error
+	client, err := l.db.DefaultTrOrDB(ctx)
+	if err != nil {
+		return err
 	}
-	q = q[:len(q)-1]
-	q += ` on conflict do nothing`
-	if err = client.QueryRow(ctx, q, inputVals...).Scan(); dbError(err) != nil {
+
+	q := `delete from link where hash = $1`
+
+	if err = client.QueryRow(ctx, q, hash).Scan(); dbError(err) != nil {
 		return err
 	}
 	return nil

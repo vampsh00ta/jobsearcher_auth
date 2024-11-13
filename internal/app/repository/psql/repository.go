@@ -2,12 +2,10 @@ package psql
 
 import (
 	"context"
-	"jobsearcher_user/internal/entity"
 )
 
-type Keyword interface {
-	GetAll(ctx context.Context) ([]entity.Keyword, error)
-}
-type Vacancy interface {
-	AddKeywords(ctx context.Context, jobSlugID string, slugNames []string) error
+type Link interface {
+	Create(ctx context.Context, hash, access_token string) error
+	GetAccessToken(ctx context.Context, hash string) (string, error)
+	Delete(ctx context.Context, hash string) error
 }
