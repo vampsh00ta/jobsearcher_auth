@@ -1,7 +1,6 @@
 package http
 
 import (
-	"fmt"
 	"github.com/go-playground/validator"
 	"github.com/gofiber/fiber/v2"
 	isrvc "jobsearcher_auth/internal/app/service"
@@ -85,7 +84,6 @@ func (u authRoute) acceptToken(ctx *fiber.Ctx) error {
 			Error: err,
 		})
 	}
-	fmt.Println(req)
 	if err := u.validate.Struct(req); err != nil {
 		return ctx.Status(fiber.StatusBadRequest).JSON(responseError{
 			Error: err,
@@ -106,7 +104,7 @@ type createLinkRequest struct {
 	FirstName string `json:"first_name" `
 	LastName  string `json:"last_name"`
 	Username  string `json:"username"  validate:"required"`
-	PhotoUrl  string `json:"photo_url"`
+	PhotoURL  string `json:"photo_url"`
 }
 type createLinkResponse struct {
 	Hash string `json:"hash"`
@@ -129,7 +127,7 @@ func (u authRoute) createLink(ctx *fiber.Ctx) error {
 		req.FirstName,
 		req.LastName,
 		req.Username,
-		req.PhotoUrl,
+		req.PhotoURL,
 	}
 	access, err := u.authSrvc.CreateToken(ctx.Context(), user)
 	if err != nil {

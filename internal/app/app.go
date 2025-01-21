@@ -5,7 +5,8 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"jobsearcher_auth/config"
-	"jobsearcher_auth/internal/http"
+	grpchandler "jobsearcher_auth/internal/grpc"
+
 	psqlrep "jobsearcher_auth/internal/repository/postgres"
 	"jobsearcher_auth/internal/service"
 	"net"
@@ -16,16 +17,6 @@ import (
 	"jobsearcher_auth/pkg/client"
 )
 
-func NewLogger() *zap.Logger {
-	logger, err := zap.NewProduction()
-	if err != nil {
-		panic(err)
-	}
-	defer func() {
-		_ = logger.Sync()
-	}()
-	return logger
-}
 func Run(cfg *config.Config) {
 	ctx := context.Background()
 	defer ctx.Done()
@@ -50,10 +41,9 @@ func Run(cfg *config.Config) {
 		panic(err)
 	}
 	s := grpc.NewServer()
-	authServer := http.NewAuthGRPC(srvc.Auth, srvc.Link)
-	http.Register(s, authServer)
+	authServer := grpchandler.New(srvc.Auth, srvc.Link, logger)
+	grpchandler.Register(s, authServer)
 	if err = s.Serve(lis); err != nil {
 		logger.Fatal("Ошибка запуска сервера: %v", zap.Error(err))
 	}
-
 }

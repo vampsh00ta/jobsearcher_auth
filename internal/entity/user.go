@@ -5,5 +5,5 @@ type User struct {
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 	Username  string `json:"username"`
-	PhotoUrl  string `json:"photo_url"`
+	PhotoURL  string `json:"photo_url"`
 }

@@ -220,7 +220,7 @@ type CreateLinkRequest struct {
 	FirstName *string `protobuf:"bytes,2,opt,name=FirstName,proto3,oneof" json:"FirstName,omitempty"`
 	LastName  *string `protobuf:"bytes,3,opt,name=LastName,proto3,oneof" json:"LastName,omitempty"`
 	Username  *string `protobuf:"bytes,4,opt,name=Username,proto3,oneof" json:"Username,omitempty"`
-	PhotoUrl  *string `protobuf:"bytes,5,opt,name=PhotoUrl,proto3,oneof" json:"PhotoUrl,omitempty"`
+	PhotoUrl  *string `protobuf:"bytes,5,opt,name=PhotoURL,proto3,oneof" json:"PhotoURL,omitempty"`
 }
 
 func (x *CreateLinkRequest) Reset() {

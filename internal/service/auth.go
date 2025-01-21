@@ -6,7 +6,6 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"jobsearcher_auth/config"
 	isrvc "jobsearcher_auth/internal/app/service"
-	//"github.com/dgrijalva/jwt-go"
 	"jobsearcher_auth/internal/entity"
 	"time"
 )
@@ -20,7 +19,7 @@ type jwtClaim struct {
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 	Username  string `json:"username"`
-	PhotoUrl  string `json:"photo_url"`
+	PhotoURL  string `json:"photo_url"`
 	jwt.RegisteredClaims
 }
 
@@ -29,13 +28,13 @@ func NewAuth(cfg *config.Config) isrvc.Auth {
 		cfg: cfg,
 	}
 }
-func (a auth) CreateToken(ctx context.Context, user entity.User) (string, error) {
+func (a auth) CreateToken(_ context.Context, user entity.User) (string, error) {
 	userClaims := jwtClaim{
 		user.ID,
 		user.FirstName,
 		user.LastName,
 		user.Username,
-		user.PhotoUrl,
+		user.PhotoURL,
 		jwt.RegisteredClaims{
 			// A usual scenario is to set the expiration time relative to the current time
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
@@ -47,8 +46,8 @@ func (a auth) CreateToken(ctx context.Context, user entity.User) (string, error)
 	if err != nil {
 		return "", err
 	}
-	return access, nil
 
+	return access, nil
 }
 func (a auth) VerifyToken(_ context.Context, accessToken string) (bool, error) {
 	token, err := jwt.ParseWithClaims(accessToken, &jwtClaim{}, func(token *jwt.Token) (interface{}, error) {
@@ -61,6 +60,6 @@ func (a auth) VerifyToken(_ context.Context, accessToken string) (bool, error) {
 	if !ok {
 		return false, errors.New("wrong or expired data")
 	}
-	return true, nil
 
+	return true, nil
 }

@@ -1,11 +1,11 @@
 app:
-  name: 'jobsearcher_user'
+  name: 'jobsearcher_auth'
   version: '1.0.0'
 
 
 logger:
   log_level: 'debug'
-  rollbar_env: 'jobsearcher_user'
+  rollbar_env: 'jobsearcher_auth'
 
 bleve:
   file_path: './bleve/keyword_index.bleve'
