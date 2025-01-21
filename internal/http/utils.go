@@ -4,7 +4,7 @@ type responseError struct {
 	Error error `json:"err"`
 }
 
-func checkNilString(str *string) string {
+func nilToString(str *string) string {
 	if str == nil {
 		return ""
 	}

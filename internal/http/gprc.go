@@ -2,7 +2,6 @@ package http
 
 import (
 	"context"
-	"fmt"
 	"google.golang.org/grpc"
 	isrvc "jobsearcher_user/internal/app/service"
 	"jobsearcher_user/internal/entity"
@@ -27,7 +26,6 @@ func Register(s *grpc.Server, auth *authGRPC) {
 func (u authGRPC) VerifyToken(ctx context.Context, req *pb.VerifyTokenRequest) (*pb.VerifyTokenResponse, error) {
 	ok, err := u.authSrvc.VerifyToken(ctx, req.AccessToken)
 	if err != nil {
-		fmt.Println(ok, req.AccessToken, err)
 
 		return nil, err
 	}
@@ -48,16 +46,16 @@ func (u authGRPC) CreateLink(ctx context.Context, req *pb.CreateLinkRequest) (*p
 
 	user := entity.User{
 		int(req.ID),
-		checkNilString(req.FirstName),
-		checkNilString(req.LastName),
-		checkNilString(req.Username),
-		checkNilString(req.PhotoUrl),
+		nilToString(req.FirstName),
+		nilToString(req.LastName),
+		nilToString(req.Username),
+		nilToString(req.PhotoUrl),
 	}
 	access, err := u.authSrvc.CreateToken(ctx, user)
 	if err != nil {
 		return nil, err
 	}
-	hash, err := u.linkSrvc.Create(ctx, checkNilString(req.Username), access)
+	hash, err := u.linkSrvc.Create(ctx, nilToString(req.Username), access)
 	if err != nil {
 		return nil, err
 	}
