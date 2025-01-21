@@ -7,9 +7,6 @@ logger:
   log_level: 'debug'
   rollbar_env: 'jobsearcher_auth'
 
-bleve:
-  file_path: './bleve/keyword_index.bleve'
-  index_id: 'document'
 postgres:
   pool_max: 10
 
