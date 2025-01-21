@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/jackc/pgx/v5"
-	"jobsearcher_user/config"
-	"jobsearcher_user/pkg/utils"
+	"jobsearcher_auth/config"
+	"jobsearcher_auth/pkg/utils"
 	"log"
 	"time"
 

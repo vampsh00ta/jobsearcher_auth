@@ -2,7 +2,7 @@ package http
 
 import (
 	"github.com/go-playground/validator"
-	srvc "jobsearcher_user/internal/app/service"
+	srvc "jobsearcher_auth/internal/app/service"
 
 	"github.com/gofiber/fiber/v2"
 )

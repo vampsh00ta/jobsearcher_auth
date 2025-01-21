@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/go-playground/validator"
 	"github.com/gofiber/fiber/v2"
-	isrvc "jobsearcher_user/internal/app/service"
-	"jobsearcher_user/internal/entity"
+	isrvc "jobsearcher_auth/internal/app/service"
+	"jobsearcher_auth/internal/entity"
 )
 
 type authRoute struct {

@@ -5,10 +5,10 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/hex"
-	"jobsearcher_user/config"
-	ipsql "jobsearcher_user/internal/app/repository/psql"
-	isrvc "jobsearcher_user/internal/app/service"
-	"jobsearcher_user/pkg/client"
+	"jobsearcher_auth/config"
+	ipsql "jobsearcher_auth/internal/app/repository/psql"
+	isrvc "jobsearcher_auth/internal/app/service"
+	"jobsearcher_auth/pkg/client"
 )
 
 type link struct {

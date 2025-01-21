@@ -1,9 +1,9 @@
 package service
 
 import (
-	"jobsearcher_user/config"
-	isrvc "jobsearcher_user/internal/app/service"
-	postgresrep "jobsearcher_user/internal/repository/postgres"
+	"jobsearcher_auth/config"
+	isrvc "jobsearcher_auth/internal/app/service"
+	postgresrep "jobsearcher_auth/internal/repository/postgres"
 )
 
 type Service struct {

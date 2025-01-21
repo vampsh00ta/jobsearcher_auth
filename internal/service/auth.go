@@ -4,10 +4,10 @@ import (
 	"context"
 	"errors"
 	"github.com/golang-jwt/jwt/v4"
-	"jobsearcher_user/config"
-	isrvc "jobsearcher_user/internal/app/service"
+	"jobsearcher_auth/config"
+	isrvc "jobsearcher_auth/internal/app/service"
 	//"github.com/dgrijalva/jwt-go"
-	"jobsearcher_user/internal/entity"
+	"jobsearcher_auth/internal/entity"
 	"time"
 )
 

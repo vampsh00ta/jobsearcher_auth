@@ -1,4 +1,4 @@
-module jobsearcher_user
+module jobsearcher_auth
 
 go 1.23.1
 

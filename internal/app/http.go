@@ -6,7 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"go.uber.org/zap"
-	"jobsearcher_user/config"
+	"jobsearcher_auth/config"
 )
 
 func newHTTP(cfg *config.Config, logger *zap.Logger) *fiber.App {

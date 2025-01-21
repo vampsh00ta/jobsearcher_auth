@@ -3,9 +3,9 @@ package http
 import (
 	"context"
 	"google.golang.org/grpc"
-	isrvc "jobsearcher_user/internal/app/service"
-	"jobsearcher_user/internal/entity"
-	"jobsearcher_user/internal/pb"
+	isrvc "jobsearcher_auth/internal/app/service"
+	"jobsearcher_auth/internal/entity"
+	"jobsearcher_auth/internal/pb"
 )
 
 type authGRPC struct {

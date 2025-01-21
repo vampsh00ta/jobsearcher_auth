@@ -1,8 +1,8 @@
 package main
 
 import (
-	"jobsearcher_user/config"
-	"jobsearcher_user/internal/app"
+	"jobsearcher_auth/config"
+	"jobsearcher_auth/internal/app"
 	"log"
 )
 

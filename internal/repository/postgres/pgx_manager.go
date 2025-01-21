@@ -2,7 +2,7 @@ package postgresrep
 
 import (
 	"context"
-	"jobsearcher_user/pkg/client"
+	"jobsearcher_auth/pkg/client"
 )
 
 type PgxManager struct {

@@ -2,8 +2,8 @@ package postgresrep
 
 import (
 	"context"
-	ipsql "jobsearcher_user/internal/app/repository/psql"
-	"jobsearcher_user/pkg/client"
+	ipsql "jobsearcher_auth/internal/app/repository/psql"
+	"jobsearcher_auth/pkg/client"
 )
 
 type link struct {

@@ -1,8 +1,8 @@
 package postgresrep
 
 import (
-	ipsql "jobsearcher_user/internal/app/repository/psql"
-	"jobsearcher_user/pkg/client"
+	ipsql "jobsearcher_auth/internal/app/repository/psql"
+	"jobsearcher_auth/pkg/client"
 )
 
 type Repository struct {

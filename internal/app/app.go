@@ -4,16 +4,16 @@ import (
 	"context"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
-	"jobsearcher_user/config"
-	"jobsearcher_user/internal/http"
-	psqlrep "jobsearcher_user/internal/repository/postgres"
-	"jobsearcher_user/internal/service"
+	"jobsearcher_auth/config"
+	"jobsearcher_auth/internal/http"
+	psqlrep "jobsearcher_auth/internal/repository/postgres"
+	"jobsearcher_auth/internal/service"
 	"net"
 
 	// psqlrep "jobsearcher/internal/repository/postgres_repository"
 	// "jobsearcher/internal/service".
 
-	"jobsearcher_user/pkg/client"
+	"jobsearcher_auth/pkg/client"
 )
 
 func NewLogger() *zap.Logger {

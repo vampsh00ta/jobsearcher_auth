@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"jobsearcher_user/internal/entity"
+	"jobsearcher_auth/internal/entity"
 )
 
 type Auth interface {
