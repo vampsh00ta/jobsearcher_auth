@@ -3,10 +3,12 @@ package app
 import (
 	"context"
 	"go.uber.org/zap"
+	"google.golang.org/grpc"
 	"jobsearcher_user/config"
 	"jobsearcher_user/internal/http"
 	psqlrep "jobsearcher_user/internal/repository/postgres"
 	"jobsearcher_user/internal/service"
+	"net"
 
 	// psqlrep "jobsearcher/internal/repository/postgres_repository"
 	// "jobsearcher/internal/service".
@@ -42,21 +44,15 @@ func Run(cfg *config.Config) {
 	// Services
 	logger.Info("starting services...")
 	srvc := service.New(psqlRep, cfg)
-	app := newHTTP(cfg, logger)
-	http.New(app, http.Services{
-		Auth: srvc.Auth,
-		Link: srvc.Link,
-	})
-	//u := entity.User{
-	//	ID:        564764193,
-	//	FirstName: "name",
-	//	LastName:  "",
-	//	Username:  "vamp_sh00ta",
-	//	PhotoUrl:  "https%3A%2F%2Ft.me%2Fi%2Fuserpic%2F320%2Fg5_nfUkP_Gw0M0P27NFukf34YYQOX0m87CfUVel4CEM.jpg"}
-	//access, err := srvc.Auth.CreateToken(ctx, u)
-	//fmt.Println(access, err)
-	//fmt.Println(srvc.Auth.VerifyToken(ctx, access))
-	if err = app.Listen(":" + cfg.HTTP.Port); err != nil {
+
+	lis, err := net.Listen("tcp", ":"+cfg.HTTP.Port)
+	if err != nil {
+		panic(err)
+	}
+	s := grpc.NewServer()
+	authServer := http.NewAuthGRPC(srvc.Auth, srvc.Link)
+	http.Register(s, authServer)
+	if err = s.Serve(lis); err != nil {
 		logger.Fatal("Ошибка запуска сервера: %v", zap.Error(err))
 	}
 

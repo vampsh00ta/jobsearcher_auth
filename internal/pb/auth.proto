@@ -15,7 +15,8 @@ message VerifyTokenRequest{
   string AccessToken = 1;
 }
 message VerifyTokenResponse{
-  optional string   Error   = 1;
+
+  bool   Status   = 1;
 }
 
 
